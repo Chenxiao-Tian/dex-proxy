@@ -150,6 +150,8 @@ class DexProxy:
 
         await self.__server.stop()
 
+        await self.__exchange.stop()
+
         app_health.stopped()
 
         await self.pantheon.sleep(1)

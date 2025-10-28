@@ -1,0 +1,52 @@
+{
+    "logging": {
+        "level": "debug",
+        "overrides": [
+            {
+                "logger_name": "aiohttp.access",
+                "level": "warn"
+            }
+        ]
+    },
+    "RabbitMQ": {
+        "url": "amqp://dev-sng-rmq.kdev"
+    },
+    "Redis": {
+        "host": "localhost",
+        "port": 6379
+    },
+    "server": {
+        "port": 7158
+    },
+    "_key_store_file_path": "/app/auros/secret/wallet.json",
+    "key_store_file_path": "dex_proxy/test/wallet.json",
+    "dex": {
+        "name": "harbor",
+        "connectors": {
+            "harbor": {
+                "api_key_env": "HARBOR_API_KEY",
+                "eth_from_addr_env": "ETH_FROM_ADDR",
+                "btc_from_addr_env": "BTC_FROM_ADDR",
+                "rest": {
+                    "base_uri": "https://api.harbor-dev.xyz",
+                    "api_path": "/api/v1",
+                    "request_timeout": 30
+                },
+                "xnode": {
+                    "base_uri": "https://xnode.harbor-dev.xyz",
+                    "api_path": "/xnode"
+                },
+                "websocket": {
+                    "url": "wss://api.harbor-dev.xyz/ws/v1"
+                }
+            }
+        },
+        "request_cache": {
+            "finalised_requests_cleanup_after_s": 600,
+            "store_in_redis": false
+        },
+        "transactions_status_poller": {
+            "poll_interval_s": 30
+        }
+    }
+}
