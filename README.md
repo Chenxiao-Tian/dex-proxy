@@ -124,6 +124,26 @@
   - ```pip install .```
   - ```python3 -u -m dex_proxy.main -s -c vert.config.json -n vert```
 
+#### Harbor
+- Building the image
+  - ```docker build -t dex-proxy-harbor -f ./Dockerfile.local .```
+- Running the container starts an image with an ```sshd``` listening binded to the host network
+  - ```docker run --volume ./:/app/auros -p 127.0.0.1:72222:22 -p 127.0.0.1:11958:11958 --name dex-proxy-harbor -d dex-proxy-harbor```
+- Attaching to an image can be accomplished with ```ssh``` (this allows us to forward ```ssh-agent``` through ```ssh```)
+  - ```ssh -o NoHostAuthenticationForLocalhost=yes -A root@localhost -p 72222```
+- While inside the container
+  - ```cd harbor```
+  - ```pip install .```
+  - ```python3 -u -m dex_proxy.main -s -c harbor.config.json -n harbor```
+  - The Harbor connector expects `HARBOR_API_KEY`, `ETH_FROM_ADDR`, and `BTC_FROM_ADDR` to be present in the environment
+    unless the configuration file provides explicit overrides under `dex.connectors.harbor`.
+  - If your local checkout does **not** contain the `harbor` directory yet, pull the latest changes from `origin` (or the
+    provided Harbor integration branch) before running these commands.
+  - When sharing work externally, create a feature branch (for example `git checkout -b harbor-integration` followed by
+    `git push -u origin harbor-integration`) so reviewers can track the Harbor additions separately from `main`.
+  - For Windows-only, step-by-step instructions (including where the Harbor modules live in the repo and how to launch the
+    service locally) see [`harbor/LOCAL_WINDOWS_SETUP.md`](harbor/LOCAL_WINDOWS_SETUP.md).
+
 #### Notes 
 - We are mounting our working directory directly to the image so you shouldn't need to rebuild the image to develop
 - We assume existence of valid ssh keys in the host ```ssh-agent``` and they are forwarded to the ```sshd``` inside the Docker image

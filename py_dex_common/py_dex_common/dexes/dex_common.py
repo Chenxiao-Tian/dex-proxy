@@ -219,6 +219,10 @@ class DexCommon(ABC):
         self._logger.debug(f'Getting request: client_request_id={client_request_id}')
         return self._request_cache.get(client_request_id)
 
+    async def stop(self) -> None:
+        """Hook for subclasses to release resources before shutdown."""
+        return
+
     async def __get_request_status(self, path, params, received_at_ms):
         try:
             client_request_id = params['client_request_id']
