@@ -137,6 +137,9 @@
   - ```python3 -u -m dex_proxy.main -s -c harbor.config.json -n harbor```
   - The Harbor connector expects `HARBOR_API_KEY`, `ETH_FROM_ADDR`, and `BTC_FROM_ADDR` to be present in the environment
     unless the configuration file provides explicit overrides under `dex.connectors.harbor`.
+  - The Harbor source tree lives directly under the repo root at `harbor/`.  Inside that folder the Python package sits at
+    `harbor/dex_proxy/` (for example `harbor/dex_proxy/harbor.py`, `harbor/dex_proxy/harbor_api.py`, etc.), so if you need to
+    add new features drop them into that directory structure.
   - If your local checkout does **not** contain the `harbor` directory yet, pull the latest changes from `origin` (or the
     provided Harbor integration branch) before running these commands.
   - When sharing work externally, create a feature branch (for example `git checkout -b harbor-integration` followed by
